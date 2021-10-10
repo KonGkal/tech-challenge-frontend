@@ -6,6 +6,8 @@
   margin: 0;
   padding: 0;
   position: relative;
+  overflow-y: scroll;
+  height: $modalMaxWidth;
 }
 /* Styles applied to the root element if `disablePadding={false}`. */
 .padding {
