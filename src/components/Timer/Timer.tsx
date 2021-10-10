@@ -67,6 +67,7 @@ export const Timer = ({
 
       1000,
     )
+    return () => clearInterval(id)
   }, [])
 
   const prependZero = (number: number) => (number > 9 ? '' + number : '0' + number)
