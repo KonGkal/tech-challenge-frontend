@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Timer.module.scss'
 
 export type ElapsedTime = {
@@ -6,6 +6,7 @@ export type ElapsedTime = {
   minutes: number
   hours: number
 }
+
 export interface TimerProps {
   /**
    * Is this the principal call to action on the page?
@@ -22,7 +23,7 @@ export interface TimerProps {
   /**
    * Timer contents
    */
-  children: React.ReactNode
+  children?: React.ReactNode
   /**
    * Provide your custom styles by passing a class name that will
    * be applied to the root of the component (edit to match reality)
@@ -51,8 +52,24 @@ export const Timer = ({
   const [time, setTime] = useState(elapsedTime)
   const classes = [styles.wrapper, styles[color], className].join(' ').trim()
 
-  const prependZero = (number: number) => (number > 9 ? '' + number : '0' + number)
+  useEffect(() => {
+    const id = setInterval(
+      () =>
+        setTime((time) => {
+          if (time.minutes >= 59) {
+            setTime((time) => ({ seconds: 0, minutes: 0, hours: time.hours + 1 }))
+          }
+          if (time.seconds >= 59) {
+            setTime((time) => ({ ...time, seconds: 0, minutes: time.minutes + 1 }))
+          }
+          return { ...time, seconds: time.seconds + 1 }
+        }),
 
+      1000,
+    )
+  }, [])
+
+  const prependZero = (number: number) => (number > 9 ? '' + number : '0' + number)
   return (
     <div className={classes} style={{ backgroundColor }} {...props}>
       <span>{prependZero(time.hours)}</span> : <span>{prependZero(time.minutes)}</span>:{' '}
