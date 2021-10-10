@@ -8,6 +8,7 @@ import { diffDateStrings } from '../../util/diffDateStrings'
 import { msToHuman } from '../../util/formatters/formatDateDiff'
 import { useGetSessions, useSwitchSession } from './hooks'
 import SessionControls from './SessionControls'
+import Loading from 'components/Loading'
 
 function RowAction({ name }: { name: string }) {
   const switchSession = useSwitchSession()
@@ -23,7 +24,7 @@ export default function SessionsListPage(props: any) {
       </Spacer>
       <RawCard>
         {isLoading ? (
-          'Loading'
+          <Loading children={{}} />
         ) : error ? (
           error.message
         ) : (
