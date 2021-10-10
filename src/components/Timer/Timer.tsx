@@ -52,7 +52,7 @@ export const Timer = ({
   const classes = [styles.wrapper, styles[color], className].join(' ').trim()
   return (
     <div className={classes} style={{ backgroundColor }} {...props}>
-      <span></span>
+      <span>{time.hours}</span> : <span>{time.minutes}</span>: <span>{time.seconds}</span>
     </div>
   )
 }
