@@ -50,9 +50,13 @@ export const Timer = ({
 }: TimerProps) => {
   const [time, setTime] = useState(elapsedTime)
   const classes = [styles.wrapper, styles[color], className].join(' ').trim()
+
+  const prependZero = (number: number) => (number > 9 ? '' + number : '0' + number)
+
   return (
     <div className={classes} style={{ backgroundColor }} {...props}>
-      <span>{time.hours}</span> : <span>{time.minutes}</span>: <span>{time.seconds}</span>
+      <span>{prependZero(time.hours)}</span> : <span>{prependZero(time.minutes)}</span>:{' '}
+      <span>{prependZero(time.seconds)}</span>
     </div>
   )
 }
