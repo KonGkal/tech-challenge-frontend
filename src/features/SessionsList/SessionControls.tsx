@@ -5,7 +5,7 @@ import InputText from '../../components/InputText'
 import PlayButton from '../../components/PlayButton'
 import StopButton from '../../components/StopButton'
 import { useRunningSession } from './hooks'
-
+import Timer, { ElapsedTime } from '../../components/Timer/Timer'
 interface RunningProps {
   name: string
   startDate: Date
@@ -13,12 +13,17 @@ interface RunningProps {
 
 function RunningSession({ name, startDate }: RunningProps) {
   const { stop, isLoading } = useRunningSession()
-  const { hours, minutes, seconds } = intervalToDuration({ start: startDate, end: new Date() })
+  const { hours = 0, minutes = 0, seconds = 0 } = intervalToDuration({
+    start: startDate,
+    end: new Date(),
+  })
+
+  const elapsedTime: ElapsedTime = { seconds, minutes, hours }
   return (
     <FormRow alignY="center" stretchLastChild={false}>
       {name}
       <div>
-        {hours}:{minutes}:{seconds}
+        <Timer elapsedTime={elapsedTime} />
       </div>
       <StopButton onClick={stop} disabled={isLoading}></StopButton>
     </FormRow>
