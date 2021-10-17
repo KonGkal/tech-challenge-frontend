@@ -53,8 +53,9 @@ export const Timer = ({
   const classes = [styles.wrapper, styles[color], className].join(' ').trim()
 
   useEffect(() => {
-    const id = setInterval(
-      () =>
+    let mounted = true
+    const id = setInterval(() => {
+      if (mounted) {
         setTime((time) => {
           if (time.minutes >= 59) {
             setTime((time) => ({ seconds: 0, minutes: 0, hours: time.hours + 1 }))
@@ -63,11 +64,14 @@ export const Timer = ({
             setTime((time) => ({ ...time, seconds: 0, minutes: time.minutes + 1 }))
           }
           return { ...time, seconds: time.seconds + 1 }
-        }),
+        })
+      }
+    }, 1000)
 
-      1000,
-    )
-    return () => clearInterval(id)
+    return () => {
+      mounted = false
+      clearInterval(id)
+    }
   }, [])
 
   const prependZero = (number: number) => (number > 9 ? '' + number : '0' + number)
