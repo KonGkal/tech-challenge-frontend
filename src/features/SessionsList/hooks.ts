@@ -1,5 +1,4 @@
 import {
-  SessionsQueryQuery,
   useCreateSessionMutation,
   useRunningSessionQuery,
   useSessionsQueryQuery,
@@ -27,37 +26,14 @@ export function useRunningSession({ onCompleted }: UseRunningSession = {}) {
   const [mutate, startResult] = useStartSessionMutation({ onCompleted })
   const [createSession, creationResult] = useCreateSessionMutation()
   const runningSession = data?.running_sessions[0]
-  const { data: sessionData } = useGetSessions()
-
-  const [session]: SessionsQueryQuery['sessions'] | null[] =
-    sessionData && sessionData.sessions.length && data && data.running_sessions.length
-      ? sessionData.sessions.filter((item) => item.name === data?.running_sessions[0].name)
-      : [null]
-
-  let continuePoint: Date | null = null
-
-  if (session) {
-    const end = new Date(session.endDate).getTime()
-    const start = new Date(session.startDate).getTime()
-
-    const taskTimeElapsed = new Date().setTime(end - start)
-
-    const startTime = new Date()
-    continuePoint = new Date(startTime)
-    continuePoint.setTime(startTime.getTime() + taskTimeElapsed)
-  }
 
   return {
-    continuePoint,
     runningSession,
     isLoading: startResult.loading || loading || creationResult.loading,
     startSession: (name: string) =>
       mutate({
         variables: {
-          input: {
-            name,
-            startDate: new Date().toISOString(),
-          },
+          input: { name, startDate: new Date().toISOString() },
         },
         awaitRefetchQueries: true,
         // https://github.com/apollographql/apollo-client/issues/4922
@@ -77,7 +53,7 @@ export function useRunningSession({ onCompleted }: UseRunningSession = {}) {
           input: {
             name: runningSession.name,
             startDate: runningSession.startDate,
-            endDate: continuePoint?.toISOString() ?? new Date().toISOString(),
+            endDate: new Date().toISOString(),
           },
         },
         awaitRefetchQueries: true,

@@ -14,7 +14,10 @@ export const getSessionsQuery = gql`
 
 export const createSession = gql`
   mutation createSession($input: sessions_insert_input!) {
-    insert_sessions_one(object: $input) {
+    insert_sessions_one(
+      object: $input
+      on_conflict: { constraint: sessions_pkey, update_columns: [startDate, endDate] }
+    ) {
       id
       name
       startDate
@@ -36,7 +39,10 @@ export const runningQuery = gql`
 `
 export const startSession = gql`
   mutation startSession($input: running_sessions_insert_input!) {
-    insert_running_sessions_one(object: $input) {
+    insert_running_sessions_one(
+      object: $input
+      on_conflict: { constraint: running_sessions_pkey, update_columns: [startDate] }
+    ) {
       id
       name
       startDate

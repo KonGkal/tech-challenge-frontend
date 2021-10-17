@@ -1,11 +1,11 @@
-import { intervalToDuration } from 'date-fns'
 import { SyntheticEvent, useState } from 'react'
 import FormRow from '../../components/FormRow'
 import InputText from '../../components/InputText'
 import PlayButton from '../../components/PlayButton'
 import StopButton from '../../components/StopButton'
 import { useRunningSession } from './hooks'
-import Timer, { ElapsedTime } from '../../components/Timer/Timer'
+import Timer from '../../components/Timer/Timer'
+import Loading from 'components/Loading'
 interface RunningProps {
   name: string
   startDate: Date
@@ -13,17 +13,12 @@ interface RunningProps {
 
 function RunningSession({ name, startDate }: RunningProps) {
   const { stop, isLoading } = useRunningSession()
-  const { hours = 0, minutes = 0, seconds = 0 } = intervalToDuration({
-    start: startDate,
-    end: new Date(),
-  })
 
-  const elapsedTime: ElapsedTime = { seconds, minutes, hours }
   return (
     <FormRow alignY="center" stretchLastChild={false}>
       {name}
       <div>
-        <Timer elapsedTime={elapsedTime} />
+        <Timer />
       </div>
       <StopButton onClick={stop} disabled={isLoading}></StopButton>
     </FormRow>
@@ -32,10 +27,13 @@ function RunningSession({ name, startDate }: RunningProps) {
 
 export default function SessionControls() {
   const { isLoading, runningSession } = useRunningSession()
+
   if (isLoading)
     return (
       <FormRow>
-        <span>Loading</span> ...
+        <span>
+          <Loading />
+        </span>{' '}
       </FormRow>
     )
   return runningSession ? (

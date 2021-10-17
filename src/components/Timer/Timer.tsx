@@ -33,8 +33,6 @@ export interface TimerProps {
    * Optional click handler
    */
   onClick?: () => void
-
-  elapsedTime: ElapsedTime
 }
 
 /**
@@ -46,10 +44,9 @@ export const Timer = ({
   className = '',
   backgroundColor,
   children,
-  elapsedTime,
   ...props
 }: TimerProps) => {
-  const [time, setTime] = useState(elapsedTime)
+  const [time, setTime] = useState({ seconds: 0, minutes: 0, hours: 0 })
   const classes = [styles.wrapper, styles[color], className].join(' ').trim()
 
   useEffect(() => {
