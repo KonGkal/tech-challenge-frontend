@@ -24,7 +24,7 @@ export default function SessionsListPage(props: any) {
       </Spacer>
       <RawCard>
         {isLoading ? (
-          <Loading children={{}} />
+          <Loading />
         ) : error ? (
           error.message
         ) : (

@@ -17,7 +17,7 @@ export interface LoadingProps {
   /**
    * Loading contents
    */
-  children: React.ReactNode
+  children?: React.ReactNode
   /**
    * Provide your custom styles by passing a class name that will
    * be applied to the root of the component (edit to match reality)
@@ -44,7 +44,7 @@ export const Loading = ({
 }: LoadingProps) => {
   return (
     <div className={styles.spinner}>
-      <img src={loadingImg} alt="Loading..." />
+      <img src={loadingImg} alt="Loading spinner" />
     </div>
   )
 }

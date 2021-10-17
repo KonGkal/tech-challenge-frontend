@@ -9,7 +9,7 @@ import Loading from 'components/Loading'
 
 export default function MonthChart() {
   const { names, sessions, error, loading } = useMonthChartData()
-  if (loading) return <Loading children={{}} />
+  if (loading) return <Loading />
   if (error) return <div>{error.toString()}</div>
   return (
     <Chart formatter={msToHoursMinutes} sessions={sessions as any} names={names} title="Month" />
