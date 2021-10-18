@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './WeeklySummary.module.scss'
 import { useLocation } from 'react-router'
-import { createWeekAndDays } from 'util/weekAndDays'
+import { useCreateWeekAndDays } from 'util/useCreateWeekAndDays'
 import { WeekData } from 'features/Stats/useMonthChartData'
 import { Link } from 'react-router-dom'
 export interface WeeklySummaryProps {
@@ -50,7 +50,7 @@ export const WeeklySummary = ({
 
   const { state }: { state: WeekData } = useLocation()
 
-  const [hourWorkedPerWeek, hourWorkedPerDay, week] = createWeekAndDays(state)
+  const [hourWorkedPerWeek, hourWorkedPerDay, week] = useCreateWeekAndDays(state)
 
   const days = hourWorkedPerDay.map(
     (day: HoursPerDay): JSX.Element => {

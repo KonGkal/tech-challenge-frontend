@@ -7,7 +7,7 @@ type HoursPerDay = {
 }
 type CreateWeekAndDaysReturnValue = [JSX.Element, HoursPerDay[], number]
 
-export const createWeekAndDays = (week: WeekData): CreateWeekAndDaysReturnValue => {
+export const useCreateWeekAndDays = (week: WeekData): CreateWeekAndDaysReturnValue => {
   let sumOfHours = 0
   const hoursPerDay: HoursPerDay[] = []
   for (let hour in week) {
