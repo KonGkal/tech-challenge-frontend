@@ -1,4 +1,5 @@
 import React, { ReactChild } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   XAxis,
   YAxis,
@@ -25,15 +26,26 @@ interface ChartProps<T> {
   formatter?: (value: T, index: number) => string
 }
 
+type ChartEvent = {
+  activeLabel: string
+}
+
 export default function Chart<T>({ sessions, title, names, formatter }: ChartProps<T>) {
+  const history = useHistory()
   const Bars = names.map((x: string) => (
     <Bar key={x} dataKey={x} name={x} stackId="a" fill={stringToColour(x)} />
   ))
+
+  const handleClick = (event: MouseEvent & ChartEvent) => {
+    const [active] = sessions.filter((session: any) => session.startDate === event.activeLabel)
+    history.push('/weekly', active)
+  }
   return (
     <React.Fragment>
       <Title>{title}</Title>
       <ResponsiveContainer height="100%">
         <BarChart
+          onClick={handleClick}
           data={sessions}
           margin={{
             top: 16,

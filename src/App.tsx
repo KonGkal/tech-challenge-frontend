@@ -5,6 +5,8 @@ import { Link, Route, useLocation } from 'react-router-dom'
 import Tabs, { Tab } from './components/Tabs'
 import Page from './components/Page'
 import StatsPage from './features/Stats'
+import WeeklySummary from 'components/WeeklySummary'
+import DailySummary from 'components/DailySummary'
 
 function App() {
   const location = useLocation()
@@ -18,6 +20,8 @@ function App() {
       <Switch>
         <Route path="/" exact component={SessionsListPage} />
         <Route path="/stats" exact component={StatsPage} />
+        <Route path="/weekly" exact component={WeeklySummary} />
+        <Route path="/daily/:week" exact component={DailySummary} />
       </Switch>
     </Page>
   )

@@ -1,0 +1,35 @@
+@import 'common.scss';
+@import 'colors.scss';
+
+$card-border: 1px solid $grey-card-border;
+
+.wrapper {
+  display: flex;
+  font-family: $primaryFont;
+  font-weight: $mediumFontWeight;
+  font: $text14Regular;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: $modalMaxWidth;
+  flex: 1;
+  border: $card-border;
+  border-radius: $rounded;
+  flex-direction: column;
+  background-color: $white;
+  li {
+    list-style: none;
+  }
+}
+
+.primary {
+  color: $primary90;
+}
+.secondary {
+  color: $grey70;
+}
+.success {
+  color: $success70;
+}
+.danger {
+  color: $danger90;
+}
